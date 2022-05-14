@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="autoweka">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../autoweka.zip!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../autoweka.zip!/doc/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../autoweka.zip!/src/java" />
+      <root url="jar://$PROJECT_DIR$/../autoweka.zip!/test/java" />
+    </SOURCES>
+  </library>
+</component>
