@@ -14,8 +14,15 @@ import com.company.betTest;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("The median of numbers after 10 is: " +median(listOfNumsAfter10(numArray())));
-        System.out.println(betTest.total(1.3, 1, Main.listOfNumsAfter10(numArray())));
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+            System.out.println(median(afterN(numArray(), i)));
+        }
+        System.out.println(median(afterN(numArray(), 10)));
+        System.out.println(median(numArray()));
+        System.out.println((betTest.total(2.954, 5.437, Main.afterN(numArray(), 7.494), 1000)));
+        System.out.println(Arrays.toString(betTest.best(1000, Main.numArray())));
+
     }
     static void plot() throws IOException {
     //create an instance of JFrame class
@@ -29,46 +36,6 @@ public class Main {
     frame.setVisible(true);
 
 
-    }
-    static double findLargest(double[] numArray) {
-        double largest = numArray[0];
-        for (int i = 0; i < numArray.length; i++) {
-            if (numArray[i] > largest) {
-                largest = numArray[i];
-            }
-        }
-        return largest;
-    }
-    static int countOutliers(double[] numArray) {
-        double count = 0;
-        int i = 0;
-        for (double num : numArray) {
-            if (num < getAverage(numArray) + 1.5 * (getAverage(numArray) - getMin(numArray))) {
-                i++;
-            }
-        }
-        return i;
-    }
-
-    static double[] removeOutliers(double[] numArray) {
-        double[] newArray = new double[numArray.length];
-        int i = 0;
-        for (double num : numArray) {
-            if (num < getAverage(numArray) + 1.5 * (getAverage(numArray) - getMin(numArray))) {
-                newArray[i] = num;
-                i++;
-            }
-        }
-        return newArray;
-    }
-    static double getMin(double[] numArray) {
-        double min = numArray[0];
-        for (double num : numArray) {
-            if (num < min) {
-                min = num;
-            }
-        }
-        return min;
     }
     public static double[] addX(int n, double arr[], double x)
     {
@@ -88,34 +55,56 @@ public class Main {
 
         return newarr;
     }
-    static int numsAfter10(double[] numArray) {
-        int i = 0;
-        for (double num : numArray) {
-            if (num >= 10) {
-                i++;
+    public static int totalN(double n, double[] arr){
+        int sum = 0;
+        for (double j : arr) {
+            if (j >= n) {
+                sum ++;
             }
         }
-        return i;
+        return sum;
     }
-    static double[] listOfNumsAfter10(double[] arr){
-        double[] sum = new double[numsAfter10(arr)];
-        for (int i = 0; i < sum.length -1; i++) {
-            if(arr[i] >= 10){
-                double a = arr[i + 1];
-                sum[i] = a;
+    static double[] afterN(double[] arr, double n){
+        double[] newArr = new double[countAfterN(arr, n)];
+        int j = 0;
+        for (int i = 0; i < totalN(n, arr) -1; i++) {
+            if (arr[i] >= n) {
+                newArr[j] = arr[i + 1];
+                j++;
             }
         }
-        int current = 0;
+        //remove trailing zeros
+        int k = 0;
+        for (int i = 0; i < newArr.length; i++) {
+            if (newArr[i] != 0.0) {
+                k++;
+            }
+        }
+        double[] newArr2 = new double[k];
+        for (int i = 0; i < k; i++) {
+            newArr2[i] = newArr[i];
+        }
+
+        return newArr2;
+    }
+    static int countAfterN(double[] arr, double n){
+        int sum = 0;
         for (int i = 0; i < arr.length; i++) {
-
-            if (arr[i] != 0) {
-                arr[current++] = arr[i];
+            if (arr[i] >= n) {
+                sum++;
             }
         }
-        arr = Arrays.copyOf(arr, current);
-        return arr;
+        return sum;
     }
-
+    static int nonZero(double[] arr){
+        int sum = 0;
+        for (double v : arr) {
+            if (v != 0.0) {
+                sum++;
+            }
+        }
+        return sum;
+    }
     static double getAverageOf10(double[] arr){
         //get the average of numbers after a number >= 10
         double sum = 0;
@@ -136,7 +125,7 @@ public class Main {
         return sum/arr.length;
     }
     static double[] numArray() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader("/Users/owenkruse/Downloads/GetAverage/src/com/company/List"));
+        BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\oweno\\IdeaProjects\\GetAverage\\src\\com\\company\\List"));
         String str;
         List<String> list = new ArrayList<String>();
         while((str = in.readLine()) != null){
